@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   `net_amount` decimal(16,2) NOT NULL,
   `training_mode_flag` tinyint(1) DEFAULT '0',
   CONSTRAINT unique_tid UNIQUE(transaction_id),
-  INDEX idx_unitid (unit_id),
-  INDEX idx_bdt (begin_date_time)
+  INDEX idx_bdt (begin_date_time),
+  INDEX idx_unitid_bdt (unit_id, begin_date_time)
 )ENGINE=InnoDB;
 
 CREATE TABLE `registry` (
@@ -22,5 +22,6 @@ CREATE TABLE `registry` (
   `registration_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `username` VARCHAR(64) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_tid_status` (`transaction_id`)
+  UNIQUE KEY `unique_tid_status` (`transaction_id`),
+  INDEX idx_rtime (registration_time)
 ) ENGINE=InnoDB;
