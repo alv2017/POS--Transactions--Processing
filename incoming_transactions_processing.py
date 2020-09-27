@@ -22,6 +22,9 @@ def process_retail_transaction_file(xmlFileLocation):
             b) If DB connection fails to establish - the function returns 2
             c) In all other cases the function returns 0
     """    
+    nRetailTransactions = 0
+    nSavedToDB = 0
+    
     # Check if file exists
     if not os.path.isfile(xmlFileLocation):
         print("ERROR: XML file does not exist: \n\t{0}".format(xmlFileLocation))
@@ -48,6 +51,9 @@ def process_retail_transaction_file(xmlFileLocation):
         cursor = dbconn.cursor()
         # Process data
         transaction_dict = retail_transaction_parser(t)
+        if not transaction_dict:
+            continue
+        nRetailTransactions = nRetailTransactions + 1
         retailTransactionObject = RetailTransaction.create_from_dictionary(transaction_dict)
         
         transaction_record = insert_retailTransactionRecord(cursor, retailTransactionObject)
@@ -56,6 +62,7 @@ def process_retail_transaction_file(xmlFileLocation):
         if transaction_record > 0 and registry_record > 0:
             dbconn.commit()
             cursor.close()
+            nSavedToDB = nSavedToDB + 1
             print("Transaction {0}: loaded successfully.".format(retailTransactionObject.id))
         else:
             print("\n*************** FAILED TRANSACTION ***************")
@@ -65,6 +72,9 @@ def process_retail_transaction_file(xmlFileLocation):
             print("**************************************************\n")
             dbconn.rollback()
     
+    print("File {0} has been processed.".format(xmlFileLocation))
+    print("Number of retail transactions: {0}".format(nRetailTransactions))
+    print("Number of retail transactions saved to retail database is {0}.".format(nSavedToDB))
     dbconn.close()
     return 0
         
