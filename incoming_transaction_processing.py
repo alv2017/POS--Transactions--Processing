@@ -21,9 +21,7 @@ def process_retail_transaction_file(xmlFileLocation):
             a) If the xml file is not found - the function returns 1
             b) If DB connection fails to establish - the function returns 2
             c) In all other cases the function returns 0
-    """
-    # Read transaction XML elements from the received XML file
-    
+    """    
     # Check if file exists
     if not os.path.isfile(xmlFileLocation):
         print("ERROR: XML file does not exist: \n\t{0}".format(xmlFileLocation))
@@ -71,6 +69,6 @@ def process_retail_transaction_file(xmlFileLocation):
     return 0
         
 if __name__ == '__main__':
-    datafile = os.path.join(ROOT_DIR, "sample_data", "arts5.xml")
+    datafile = os.path.join(ROOT_DIR, "sample_data", "arts1.xml")
     process_retail_transaction_file(datafile)
     
