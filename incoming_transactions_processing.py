@@ -25,6 +25,8 @@ def process_retail_transaction_file(xmlFileLocation):
     nRetailTransactions = 0
     nSavedToDB = 0
     
+    print("\n*** Started processing the file: \n\t{0}\n".format(xmlFileLocation))
+    
     # Check if file exists
     if not os.path.isfile(xmlFileLocation):
         print("ERROR: XML file does not exist: \n\t{0}".format(xmlFileLocation))
@@ -65,20 +67,25 @@ def process_retail_transaction_file(xmlFileLocation):
             nSavedToDB = nSavedToDB + 1
             print("Transaction {0}: loaded successfully.".format(retailTransactionObject.id))
         else:
-            print("\n*************** FAILED TRANSACTION ***************")
-            print("  Transaction {0}: loading to DB failed.**".format(retailTransactionObject.id))
-            print("\n  Failed to load transaction data:**")
+            print("\n    *************** FAILED TRANSACTION ***************")
+            print("    Transaction {0}: loading to DB failed.".format(retailTransactionObject.id))
+            print("    Failed to load transaction data:")
             print(retailTransactionObject)
-            print("**************************************************\n")
+            print("    **************************************************\n")
             dbconn.rollback()
     
-    print("File {0} has been processed.".format(xmlFileLocation))
-    print("Number of retail transactions: {0}".format(nRetailTransactions))
-    print("Number of retail transactions saved to retail database is {0}.".format(nSavedToDB))
+    print("    File {0} has been processed.".format(xmlFileLocation))
+    print("    Number of retail transactions: {0}".format(nRetailTransactions))
+    print("    Number of retail transactions saved to retail database is {0}.".format(nSavedToDB))
+    print()
     dbconn.close()
     return 0
         
 if __name__ == '__main__':
-    datafile = os.path.join(ROOT_DIR, "sample_data", "arts1.xml")
-    process_retail_transaction_file(datafile)
+    import sys
+    if len(sys.argv)==1:
+        print("Error: not enough argurments: Which xml files do you need to process?")
+        print("\tUsage: python {0} file1.xml [file2.xml, ...]".format(sys.argv[0]))
+    for i in range(1, len(sys.argv)):
+        process_retail_transaction_file(sys.argv[i])
     
