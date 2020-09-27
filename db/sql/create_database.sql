@@ -1,3 +1,2 @@
 CREATE DATABASE IF NOT EXISTS retail
-CHARACTER SET utf8
-COLLATION utf8_general_ci;
+CHARACTER SET utf8 COLLATE utf8_general_ci;
