@@ -8,7 +8,10 @@ XMLNS = {"poslog_ns": "http://www.nrf-arts.org/IXRetail/namespace/",
 # XML Parsing Functions
 def retail_transaction_parser(transactionXMLElement):
     t = transactionXMLElement
-    
+    # If element does not contain Retail Transaction Element return None
+    if not t.find(".//poslog_ns:RetailTransaction", XMLNS):
+        return {}
+        
     # Transaction Training Mode Flag
     try:
         trainingModeFlag = 0 + bool(t.attrib["TrainingModeFlag"])
