@@ -19,7 +19,9 @@ The function is located in incoming_transactions_processing.py file.
 is expected to run once a day, to scan the database table above, and to produce a csv file 
 with sales grouped by store. 
 
-**Output fields**: Date, StoreID, TotalItems, TotalAmount, TotalReceipts.
+**Output fields**: StoreID, TotalItems, TotalAmount, TotalReceipts.
+At the moment the Date field is not presented in the report, however the names of the csv reports
+will be contain the reporting date. (I'm going to fix this problem soon.)
 
 **Comment**: In order to run the script on a daily basis we need to create a CRON job.
 Currently it has to be run on the next day after actual reporting day. For example
