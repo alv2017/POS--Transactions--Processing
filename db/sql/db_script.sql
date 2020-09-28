@@ -31,4 +31,16 @@ CREATE TABLE `registry` (
   INDEX idx_rtime (registration_time)
 ) ENGINE=InnoDB;
 
+CREATE USER "admin"@"localhost" IDENTIFIED BY "topsecret";
+CREATE USER "admin"@"127.0.0.1" IDENTIFIED BY "topsecret";
+GRANT SELECT,INSERT,UPDATE,DELETE ON retail.* TO "admin"@"localhost";
+GRANT SELECT,INSERT,UPDATE,DELETE ON retail.* TO "admin"@"127.0.0.1";
+
+
+
+
+
+
+
+
 
