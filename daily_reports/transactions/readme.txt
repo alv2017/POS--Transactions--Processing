@@ -1,0 +1,1 @@
+Daily transactions reports are stored in this directory.
